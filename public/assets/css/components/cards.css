@@ -1,0 +1,179 @@
+/* KIP · assets/css/components/cards.css · §9 Metric Cards */
+/* ── §9  METRIC CARDS ──────────────────────────────────────────── */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--s4);
+}
+
+/* Hero metric — 2 cols */
+.metric-card {
+  background: var(--bg-1);
+  border: 1px solid var(--b-1);
+  border-radius: var(--r-2xl);
+  padding: var(--s5);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--sh-md);
+  transition: border-color var(--d-base), box-shadow var(--d-base);
+}
+.metric-card:hover { border-color: var(--b-2); box-shadow: var(--sh-lg); }
+
+.metric-card--hero {
+  grid-column: span 2;
+  padding: var(--s6);
+  background: var(--bg-1);
+  border-color: var(--a-brd);
+  /* [FIX-BUG3] overflow:visible permite que .share-tooltip emerja hacia
+     arriba sin ser cortado. El glow interior usa position:absolute pero
+     no necesita clip en la card hero. */
+  overflow: visible;
+}
+.metric-card--hero:hover { box-shadow: var(--sh-a), var(--sh-lg); }
+
+/* Ambient glow inside hero card */
+.metric-card__glow {
+  position: absolute;
+  bottom: -60px; right: -60px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--a-glow) 0%, transparent 70%);
+  pointer-events: none;
+  filter: blur(30px);
+}
+
+/* Inner top rim — light reflection */
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: var(--s5); right: var(--s5);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--b-2) 30%, var(--b-2) 70%, transparent);
+  opacity: 0.6;
+}
+
+.metric-card__head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: var(--s4);
+}
+.metric-card__label {
+  font-family: var(--f-mono);
+  font-size: var(--tx-xs); font-weight: var(--fw-book);
+  color: var(--tx-2); text-transform: uppercase;
+  letter-spacing: var(--ls-caps);
+}
+.metric-card__icon {
+  width: 28px; height: 28px;
+  background: var(--a-sub);
+  border: 1px solid var(--a-brd);
+  border-radius: var(--r-md);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--a);
+}
+
+.metric-card__numrow {
+  display: flex; align-items: baseline; gap: var(--s2);
+  margin-bottom: var(--s4);
+}
+.metric-card__num {
+  font-family: var(--f-display);
+  font-size: var(--tx-hero);
+  font-weight: var(--fw-black);
+  color: var(--a);
+  letter-spacing: var(--ls-hero);
+  line-height: var(--lh-1);
+  text-shadow: 0 0 40px var(--a-glow);
+}
+.metric-card__num--md { font-size: var(--tx-5xl); }
+.metric-card__denom {
+  font-family: var(--f-display);
+  font-size: var(--tx-3xl);
+  font-weight: var(--fw-semi);
+  color: var(--tx-3); letter-spacing: var(--ls-tight);
+}
+.metric-card__unit {
+  font-family: var(--f-mono);
+  font-size: var(--tx-xl); color: var(--tx-2);
+}
+.metric-card__footnote {
+  display: flex; align-items: center; gap: var(--s1);
+  font-size: var(--tx-xs); color: var(--tx-2);
+  margin-top: var(--s3);
+}
+
+/* Progress row */
+.prog-row {
+  display: flex; align-items: center; gap: var(--s3);
+  margin-bottom: var(--s4);
+}
+.prog-track {
+  flex: 1; height: 3px;
+  background: var(--ring-track);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+}
+.prog-fill {
+  height: 100%;
+  width: var(--prog, 0%);
+  background: linear-gradient(90deg, var(--a-lo), var(--a), var(--a-hi));
+  border-radius: var(--r-pill);
+  transition: width 0.8s var(--e-out);
+  box-shadow: 0 0 6px var(--a-glow);
+}
+.prog-pct {
+  font-family: var(--f-mono);
+  font-size: var(--tx-xs); color: var(--a);
+  min-width: 36px; text-align: right;
+}
+
+/* Streak pill */
+.streak-pill {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  font-size: var(--tx-xs); color: var(--tx-2);
+  padding: var(--s1) var(--s3);
+  background: var(--bg-2);
+  border: 1px solid var(--b-1);
+  border-radius: var(--r-pill);
+}
+.streak-pill strong { color: var(--tx-1); }
+.streak-pill svg { color: var(--a); }
+
+/* Mini chart bars */
+.mini-chart {
+  display: flex; align-items: flex-end; gap: 3px;
+  height: 32px; margin-top: var(--s4);
+}
+.mini-bar {
+  flex: 1; height: var(--h, 50%);
+  border-radius: 2px 2px 0 0;
+  transition: background var(--d-fast);
+}
+.mini-bar--done    { background: var(--a-muted); }
+.mini-bar--miss    { background: var(--bg-3); }
+.mini-bar--today   { background: var(--a); box-shadow: 0 0 6px var(--a-glow); }
+
+
+
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .metrics-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .metric-card--hero {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  .metric-card--hero {
+    grid-column: 1;
+    padding: var(--s5);
+  }
+  .metric-card__num {
+    font-size: var(--tx-5xl);
+  }
+}

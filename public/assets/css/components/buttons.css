@@ -1,0 +1,52 @@
+/* KIP · assets/css/components/buttons.css · §16 Buttons */
+/* ── §16  BUTTONS ──────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  font-family: var(--f-ui); font-size: var(--tx-sm); font-weight: var(--fw-mid);
+  border-radius: var(--r-lg);
+  border: 1px solid transparent;
+  padding: var(--s2) var(--s4);
+  cursor: pointer;
+  transition: all var(--d-fast) var(--e-out);
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+.btn--sm { font-size: var(--tx-xs); padding: 6px 12px; }
+.btn--icon { padding: var(--s2); }
+
+.btn--primary {
+  background: var(--a);
+  color: var(--tx-on-a);
+  border-color: var(--a);
+  box-shadow: 0 0 16px var(--a-glow), inset 0 1px 0 rgba(255,255,255,0.15);
+}
+.btn--primary:hover {
+  background: var(--a-hi);
+  border-color: var(--a-hi);
+  box-shadow: 0 0 24px var(--a-glow), inset 0 1px 0 rgba(255,255,255,0.2);
+  transform: translateY(-1px);
+}
+.btn--primary:active { transform: translateY(0); }
+
+.btn--ghost {
+  background: var(--bg-1);
+  color: var(--tx-2);
+  border-color: var(--b-1);
+}
+.btn--ghost:hover { color: var(--tx-1); border-color: var(--b-2); background: var(--bg-2); }
+
+.btn--upgrade {
+  background: var(--p-grad);
+  color: white;
+  border-color: transparent;
+  box-shadow: var(--sh-p);
+}
+.btn--upgrade:hover { opacity: 0.9; transform: translateY(-1px); }
+
+.btn--danger {
+  background: #EF4444; color: white; border-color: #EF4444;
+}
+.btn--danger:hover { background: #DC2626; }
+
+

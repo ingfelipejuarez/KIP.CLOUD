@@ -1,0 +1,45 @@
+{
+  "name": "kip",
+  "version": "5.0.0",
+  "description": "KIP \u00b7 AI Habit Tracker PWA",
+  "private": true,
+  "scripts": {
+    "dev": "npx serve . --listen 3000 --no-clipboard",
+    "dev:vite": "npx vite --port 3000 --open app/index.html",
+    "dev:py": "python3 -m http.server 3000",
+    "preview": "npx serve . --listen 8080",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
+    "test:watch": "node --experimental-vm-modules node_modules/.bin/jest --watch"
+  },
+  "devDependencies": {
+    "serve": "^14.0.0",
+    "jest": "^29.7.0",
+    "@jest/globals": "^29.7.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {},
+    "extensionsToTreatAsEsm": [
+      ".js"
+    ],
+    "moduleNameMapper": {
+      "^(\\.{1,2}/.*)\\.js$": "$1"
+    },
+    "collectCoverageFrom": [
+      "src/core/**/*.js",
+      "src/services/*.js",
+      "src/utils/*.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 60,
+        "functions": 70,
+        "lines": 70
+      }
+    }
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  }
+}

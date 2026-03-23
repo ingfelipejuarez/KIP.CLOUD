@@ -1,0 +1,88 @@
+# KIP · netlify.toml — Configuración de despliegue en Netlify
+
+[build]
+  publish = "."
+  command = "echo 'Static site — no build step required'"
+
+# ── Redirects ──────────────────────────────────────────────────────
+[[redirects]]
+  from   = "/"
+  to     = "/app/dashboard/"
+  status = 302
+  force  = false
+
+# SPA fallback por sección
+[[redirects]]
+  from   = "/app/dashboard/*"
+  to     = "/app/dashboard/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/app/habits/*"
+  to     = "/app/habits/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/app/activity/*"
+  to     = "/app/activity/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/app/achievements/*"
+  to     = "/app/achievements/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/app/ai/*"
+  to     = "/app/ai/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/app/login/*"
+  to     = "/app/login/index.html"
+  status = 200
+
+# ── Headers de seguridad ───────────────────────────────────────────
+[[headers]]
+  for = "/*"
+
+  [headers.values]
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    X-Content-Type-Options    = "nosniff"
+    X-Frame-Options           = "DENY"
+    X-XSS-Protection          = "1; mode=block"
+    Referrer-Policy           = "strict-origin-when-cross-origin"
+    Permissions-Policy        = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+    Content-Security-Policy   = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.deepseek.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
+
+# Cache de assets estáticos
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Manifest PWA — sin cache
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+# ── Variables de entorno (referencias a Netlify Environment Variables) ──
+[build.environment]
+  NODE_VERSION = "20"
+
+# ── 404 custom page ─────────────────────────────────────────────────
+[[redirects]]
+  from   = "/*"
+  to     = "/app/404/index.html"
+  status = 404

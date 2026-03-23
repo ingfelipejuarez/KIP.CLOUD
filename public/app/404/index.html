@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="ember">
+<head>
+  <script src="../../src/kip-stub.js"></script>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-F/i5lnV2+TwjxYDGTmA2eKX9lh3agFAHOO6h8Ap6ll4=' 'sha256-J09Xe6pmngBjv/1r567ONJ4hfBrlZL1itC1jDLtGW20='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self';">
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>404 — KIP</title>
+  <link rel="stylesheet" href="../../assets/css/main.css?v=6"/>
+  <script>(function(){try{var t=localStorage.getItem('kip_tema');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})()</script>
+  <script>
+    (function(){
+      var _s=['initNotaPersistence','initArchivePersistence','toggleRegistroPersistente','kipSyncData','kipTrackEvent','kipOnReady','kipAnalytics'];
+      _s.forEach(function(n){ if(typeof window[n]==='undefined') window[n]=function(){}; });
+      if(typeof window.KIPStore==='undefined') window.KIPStore={_stub:true,getInstance:function(){return null;},getState:function(){return{};},setState:function(){},subscribe:function(){return function(){};}};
+    })();
+  </script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;text-align:center;padding:2rem">
+  <svg width="48" height="48" viewBox="0 0 28 28" fill="none">
+    <rect width="28" height="28" rx="7" fill="var(--a)"/>
+    <path d="M9 6v16M9 14l5.5-8M9 14l6.5 8" stroke="var(--tx-on-a)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <h1 style="font-family:var(--f-display);font-size:clamp(2rem,5vw,3rem);color:var(--tx-1);letter-spacing:-0.03em">404</h1>
+  <p style="color:var(--tx-2);font-size:1rem;max-width:320px">Esta página no existe o fue movida.</p>
+  <a href="../dashboard/" style="color:var(--a);font-weight:600;text-decoration:none;font-size:0.875rem">
+    ← Volver al Dashboard
+  </a>
+</div>
+</body>
+</html>

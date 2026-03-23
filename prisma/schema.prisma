@@ -1,0 +1,156 @@
+// KIP · prisma/schema.prisma
+// Base de datos PostgreSQL con todas las entidades del sistema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ── Usuario ────────────────────────────────────────────────────────
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  nombre       String   @db.VarChar(80)
+  plan         Plan     @default(FREE)
+  tema         String   @default("ember") @db.VarChar(30)
+  timezone     String   @default("America/Mexico_City") @db.VarChar(50)
+  idioma       String   @default("es") @db.VarChar(5)
+  soundEnabled Boolean  @default(true)  @map("sound_enabled")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt      @map("updated_at")
+  deletedAt    DateTime?               @map("deleted_at")
+
+  habits       Habit[]
+  badgeEarned  UserBadge[]
+  sessions     Session[]
+  completions  HabitCompletion[]
+
+  @@map("users")
+}
+
+enum Plan {
+  FREE
+  PRO
+}
+
+// ── Sesión (refresh tokens) ────────────────────────────────────────
+model Session {
+  id           String   @id @default(uuid())
+  userId       String   @map("user_id")
+  refreshToken String   @unique @map("refresh_token") @db.VarChar(512)
+  userAgent    String?  @map("user_agent")
+  ipAddress    String?  @map("ip_address")
+  expiresAt    DateTime @map("expires_at")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+// ── Hábito ─────────────────────────────────────────────────────────
+model Habit {
+  id          String      @id @default(uuid())
+  userId      String      @map("user_id")
+  nombre      String      @db.VarChar(48)
+  frecuencia  Frecuencia  @default(DIARIO)
+  categoria   Categoria   @default(GENERAL)
+  nota        String?     @db.VarChar(80)
+  metaSemanal Int?        @map("meta_semanal")
+  metaMensual Int?        @map("meta_mensual")
+  orden       Int         @default(0)        // drag & drop
+  archivado   Boolean     @default(false)
+  createdAt   DateTime    @default(now())    @map("created_at")
+  updatedAt   DateTime    @updatedAt         @map("updated_at")
+
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  completions HabitCompletion[]
+
+  @@map("habits")
+}
+
+enum Frecuencia {
+  DIARIO
+  SEMANAL
+  MENSUAL
+}
+
+enum Categoria {
+  BIENESTAR
+  SALUD
+  MENTE
+  SOCIAL
+  TRABAJO
+  GENERAL
+}
+
+// ── Registro de completado diario ─────────────────────────────────
+// Una fila por (habitoId, fecha). Permite historial real vs mock.
+model HabitCompletion {
+  id        String   @id @default(uuid())
+  habitId   String   @map("habit_id")
+  userId    String   @map("user_id")
+  fecha     DateTime @db.Date           // solo la fecha, sin hora
+  completado Boolean @default(true)
+  createdAt DateTime @default(now())    @map("created_at")
+
+  habit Habit @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId],  references: [id], onDelete: Cascade)
+
+  @@unique([habitId, fecha])            // un registro por día por hábito
+  @@index([userId, fecha])
+  @@map("habit_completions")
+}
+
+// ── Definición de badges (catálogo global) ─────────────────────────
+model BadgeDefinition {
+  id          String  @id @db.VarChar(10)  // "b1", "b2", …
+  nombre      String  @db.VarChar(50)
+  descripcion String  @db.VarChar(200)
+  icono       String  @db.VarChar(20)      // "gold", "amber", "teal", …
+  metaValor   Int?    @map("meta_valor")   // días/conteo necesario
+  metaTipo    String? @map("meta_tipo")    // "racha", "habitos", "perfecto"
+
+  earned UserBadge[]
+
+  @@map("badge_definitions")
+}
+
+// ── Badges ganados por usuario ─────────────────────────────────────
+model UserBadge {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  badgeId     String   @map("badge_id")
+  fechaLogro  DateTime @default(now()) @map("fecha_logro")
+
+  user  User            @relation(fields: [userId],  references: [id], onDelete: Cascade)
+  badge BadgeDefinition @relation(fields: [badgeId], references: [id])
+
+  @@unique([userId, badgeId])
+  @@map("user_badges")
+}
+
+// ── RAG: base de conocimiento vectorial ───────────────────────────
+// Requiere la extensión pgvector en PostgreSQL.
+// En Railway: añadir en el plugin PostgreSQL → Extensions → vector
+// Localmente: CREATE EXTENSION IF NOT EXISTS vector;
+//
+// Almacena artículos científicos sobre hábitos chunkeados + sus embeddings.
+// La búsqueda semántica encuentra los chunks más relevantes para cada pregunta.
+
+model KnowledgeChunk {
+  id          String                    @id @default(uuid())
+  titulo      String                    @db.VarChar(200)
+  contenido   String                    @db.Text
+  fuente      String                    @db.VarChar(300)   // "estudio Oxford 2010"
+  categoria   String                    @db.VarChar(50)    // "formacion", "motivacion", etc.
+  embedding   Unsupported("vector(1536)")?                 // embedding OpenAI/DeepSeek
+  createdAt   DateTime                  @default(now()) @map("created_at")
+
+  @@map("knowledge_chunks")
+}

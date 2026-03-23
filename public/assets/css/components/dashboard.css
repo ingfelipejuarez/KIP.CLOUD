@@ -1,0 +1,51 @@
+/* KIP · assets/css/components/dashboard.css · §7 Dashboard Header */
+/* ── §7  DASHBOARD HEADER ──────────────────────────────────────── */
+.dashboard { padding-top: var(--s10); padding-bottom: var(--s16); }
+
+.dash-head {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: var(--s8);
+  animation: fadeUp var(--d-page) var(--e-out) both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.dash-head__greet { display: flex; flex-direction: column; gap: var(--s2); }
+.dash-head__eyebrow {
+  font-family: var(--f-mono);
+  font-size: var(--tx-xs);
+  font-weight: var(--fw-book);
+  color: var(--tx-2);
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+}
+.dash-head__name {
+  font-family: var(--f-display);
+  /* [FIX] clamp() reemplaza el salto brusco entre 768px y desktop.
+     Escala suavemente de 28px (móvil) a 64px (desktop). */
+  font-size: clamp(var(--tx-3xl), 6vw, var(--tx-hero));
+  font-weight: var(--fw-black);
+  color: var(--tx-1);
+  letter-spacing: var(--ls-hero);
+  line-height: var(--lh-1);
+}
+.dash-head__right { padding-top: var(--s2); }
+.date-pill {
+  display: flex; align-items: center; gap: var(--s2);
+  font-family: var(--f-mono); font-size: var(--tx-xs);
+  color: var(--tx-2);
+  padding: var(--s2) var(--s3);
+  background: var(--bg-1);
+  border: 1px solid var(--b-1);
+  border-radius: var(--r-pill);
+}
+.date-pill__dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--a);
+  box-shadow: 0 0 6px var(--a-glow);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1; transform:scale(1)} 50%{opacity:0.6; transform:scale(0.85)} }
+
+

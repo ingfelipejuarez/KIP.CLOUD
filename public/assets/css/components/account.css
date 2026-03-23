@@ -1,0 +1,82 @@
+/* KIP · assets/css/components/account.css */
+
+.account-menu {
+  position: relative;
+}
+
+.account-btn {
+  display: flex; align-items: center; gap: var(--s2);
+  background: var(--bg-1);
+  border: 1px solid var(--b-1);
+  border-radius: var(--r-pill);
+  padding: 4px 10px 4px 4px;
+  transition: all var(--d-fast);
+  color: var(--tx-1);
+}
+.account-btn:hover { background: var(--bg-2); border-color: var(--b-2); box-shadow: var(--sh-sm); }
+
+.account-btn__av {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--a); color: var(--tx-on-a);
+  font-family: var(--f-display); font-size: var(--tx-sm); font-weight: var(--fw-bold);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  line-height: 1;
+  user-select: none;
+}
+.account-btn__chev { color: var(--tx-2); transition: transform var(--d-fast) var(--e-out); }
+.account-btn[aria-expanded="true"] .account-btn__chev { transform: rotate(180deg); }
+
+/* Dropdown — position:absolute relativo a .account-menu */
+.account-drop {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 248px;
+  background: var(--bg-3);
+  border: 1px solid var(--b-1);
+  border-radius: var(--r-xl);
+  box-shadow: var(--sh-xl);
+  z-index: var(--z-drop);
+  padding: var(--s2);
+  animation: dropIn var(--d-base) var(--e-spring);
+}
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.account-drop__header {
+  display: flex; align-items: center; gap: var(--s3);
+  padding: var(--s2) var(--s2) var(--s3);
+}
+.account-drop__av {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--a); color: var(--tx-on-a);
+  font-family: var(--f-display); font-size: var(--tx-base); font-weight: var(--fw-bold);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.account-drop__info { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.account-drop__name { font-size: var(--tx-sm); font-weight: var(--fw-semi); color: var(--tx-1); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.account-drop__email { font-size: var(--tx-xs); color: var(--tx-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.account-drop__plan-row {
+  display: flex; align-items: center; gap: var(--s1);
+  font-size: var(--tx-2xs); font-weight: var(--fw-semi);
+  color: var(--a); padding: var(--s1) var(--s2);
+  background: var(--a-sub); border-radius: var(--r-sm); margin: 0 var(--s1) var(--s2);
+}
+.account-drop__sep { height: 1px; background: var(--b-1); margin: var(--s1) 0; }
+.account-drop__item {
+  width: 100%; display: flex; align-items: center; gap: var(--s3);
+  padding: var(--s2) var(--s3); border-radius: var(--r-md);
+  font-size: var(--tx-sm); color: var(--tx-1); text-align: left;
+  transition: background var(--d-snap), color var(--d-snap);
+}
+.account-drop__item:hover { background: var(--bg-hover); }
+.account-drop__item svg { color: var(--tx-2); flex-shrink: 0; }
+.account-drop__item--premium { color: var(--a); font-weight: var(--fw-semi); }
+.account-drop__item--premium svg { color: var(--a); }
+.account-drop__item--premium:hover { background: var(--a-sub); }
+.account-drop__item--danger { color: #EF4444; }
+.account-drop__item--danger svg { color: #EF4444; }
+.account-drop__item--danger:hover { background: rgba(239,68,68,0.07); }

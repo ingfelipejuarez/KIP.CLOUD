@@ -1,0 +1,83 @@
+# ═══════════════════════════════════════════════════════════════════
+# KIP · .gitignore
+# ═══════════════════════════════════════════════════════════════════
+
+# ── Secrets y variables de entorno ─────────────────────────────────
+# NUNCA commitear archivos .env con valores reales
+.env
+.env.local
+.env.production
+.env.production.local
+.env.*.local
+
+# API keys y certificados
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+secrets/
+certs/
+
+# ── Dependencias ────────────────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+
+# ── Build output ────────────────────────────────────────────────────
+dist/
+build/
+.output/
+.vercel/
+.netlify/
+coverage/
+
+# ── Logs y debug ─────────────────────────────────────────────────────
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+logs/
+
+# ── Sistema operativo ────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ── IDEs y editores ──────────────────────────────────────────────────
+.vscode/settings.json
+.vscode/*.code-workspace
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+
+# ── Testing ──────────────────────────────────────────────────────────
+coverage/
+.nyc_output/
+*.lcov
+jest.config.local.js
+
+# ── Archivos temporales ──────────────────────────────────────────────
+*.tmp
+*.temp
+.cache/
+tmp/
+temp/
+
+# ── Certificados SSL (solo para desarrollo local) ────────────────────
+localhost.pem
+localhost-key.pem
+
+# ── Backups ──────────────────────────────────────────────────────────
+*.bak
+*.backup
+*.old

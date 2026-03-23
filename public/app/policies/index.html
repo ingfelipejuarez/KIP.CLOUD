@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="ember">
+<head>
+  <script src="../../src/kip-stub.js"></script>
+  <script>
+    /* KIP compatibility stubs — inline para ejecutar antes que cualquier script del servidor */
+    (function(){
+      var _s=['initNotaPersistence','initArchivePersistence','toggleRegistroPersistente','kipSyncData','kipTrackEvent','kipOnReady','kipAnalytics'];
+      _s.forEach(function(n){ if(typeof window[n]==='undefined') window[n]=function(){}; });
+      if(typeof window.KIPStore==='undefined') window.KIPStore={_stub:true,getInstance:function(){return null;},getState:function(){return{};},setState:function(){},subscribe:function(){return function(){};} };
+    })();
+  </script>
+  <!-- ── Seguridad ──────────────────────────────────────────────── -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-6qXmyKna4zeNzi79LlvT4goaMf2vZgB3/j7NmcG5og8=' 'sha256-Ofc5dztMHLggxnV9vZX2YfTRKFbSGMNdYnE/qwMHqm4=' 'sha256-wXjOToq1ARdNMzMWNC9DxL1BovYAlG1vLVcIaptUMj4=' 'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.deepseek.com;">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Política de Privacidad de KIP — cómo recopilamos, usamos y protegemos tu información." />
+  <meta name="robots" content="index, follow" />
+  <title>KIP · Política de Privacidad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Fuentes críticas (no bloquean render) -->
+  <!-- Fira Code (monospace, no crítica) — carga diferida -->
+  
+  <link rel="icon" type="image/x-icon" href="../../favicon.ico" />
+  <link rel="stylesheet" href="../../assets/css/kip.bundle.css?v=6" />
+  <link rel="manifest" href="../../manifest.json?v=13" />
+  <meta name="theme-color" content="#F59E0B" />
+  <script>
+    (function(){
+      try {
+        var t = localStorage.getItem('kip_tema') || localStorage.getItem('kip-v4-tema');
+        if (t) document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
+  <!-- HTTPS enforcement: en producción redirigir a HTTPS automáticamente -->
+  <script>
+    if (location.protocol === 'http:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+      location.replace('https:' + location.href.slice(5));
+    }
+  </script>
+  <!-- Open Graph / Social -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://kip.app/app/policies/" />
+  <meta property="og:site_name"   content="KIP" />
+  <meta property="og:title"       content="KIP — Política de Privacidad" />
+  <meta property="og:description" content="Cómo KIP recopila, usa y protege tu información personal." />
+  <meta property="og:image"       content="https://kip.app/assets/og-image.png" />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@kipapp" />
+  <meta name="twitter:title"       content="KIP — Política de Privacidad" />
+  <meta name="twitter:description" content="Cómo KIP recopila, usa y protege tu información personal." />
+  <meta name="twitter:image"       content="https://kip.app/assets/og-image.png" />
+</head>
+<body>
+
+
+
+<!-- ═══ SHARED CHROME: overlays, dialogs, navbar ═══ -->
+
+<div class="grain" aria-hidden="true"></div>
+<div class="ambient" aria-hidden="true"><div class="ambient__orb ambient__orb--1"></div><div class="ambient__orb ambient__orb--2"></div><div class="ambient__orb ambient__orb--3"></div></div>
+<div id="confetti-root" aria-hidden="true"></div>
+
+<!-- CMD PALETTE -->
+<div class="cmd-palette" id="cmd-palette" role="dialog" aria-modal="true" hidden><div class="cmd-backdrop" id="cmd-backdrop"></div><div class="cmd-box"><div class="cmd-search-row"><svg class="cmd-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10 10l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><input class="cmd-input" id="cmd-input" type="text" placeholder="Buscar páginas y acciones…" autocomplete="off" spellcheck="false" /><kbd class="cmd-esc">Esc</kbd></div><div class="cmd-results"><p class="cmd-section-label">Páginas</p><a class="cmd-item" href="../dashboard/"><div class="cmd-item__icon"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="7" y="1" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="1" y="7" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="7" y="7" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/></svg></div><span>Dashboard</span><kbd>D</kbd></a><a class="cmd-item" href="../habits/"><div class="cmd-item__icon"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5l3 3 6-6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div><span>Hábitos</span><kbd>H</kbd></a><a class="cmd-item" href="../activity/"><div class="cmd-item__icon"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 9.5l3-4 2.5 2.5L10 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div><span>Actividad</span></a><a class="cmd-item" href="../achievements/"><div class="cmd-item__icon"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1l1.3 4H12L8.5 7.5l1.2 4L6.5 9.5l-3.2 2 1.2-4L1 5h4.2L6.5 1z" fill="currentColor"/></svg></div><span>Logros</span></a><a class="cmd-item" href="../ai/"><div class="cmd-item__icon"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M6.5 8v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div><span>IA Personal</span><kbd>A</kbd></a><p class="cmd-section-label">Acciones</p><button class="cmd-item" data-cmd="new-habit"><div class="cmd-item__icon"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v11M1 6.5h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><span>Nuevo hábito</span><kbd>N</kbd></button><button class="cmd-item" data-cmd="settings"><div class="cmd-item__icon"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="2" stroke="currentColor" stroke-width="1.2"/></svg></div><span>Configuración</span></button><button class="cmd-item" data-cmd="theme"><div class="cmd-item__icon"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.2"/></svg></div><span>Cambiar tema</span><kbd>T</kbd></button></div></div></div>
+
+<!-- KBD PANEL -->
+<div class="kbd-panel" id="kbd-panel" role="dialog" aria-modal="true" hidden><div class="kbd-panel__inner"><div class="kbd-panel__head"><h3 class="kbd-panel__title">Atajos</h3><button class="modal-close" id="btn-close-kbd"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div><div class="kbd-panel__list"><div class="kbd-row"><kbd>⌘K</kbd><span>Paleta</span></div><div class="kbd-row"><kbd>N</kbd><span>Nuevo hábito</span></div><div class="kbd-row"><kbd>T</kbd><span>Tema</span></div><div class="kbd-row"><kbd>S</kbd><span>Sonido</span></div><div class="kbd-row"><kbd>D</kbd><span>Dashboard</span></div><div class="kbd-row"><kbd>H</kbd><span>Hábitos</span></div><div class="kbd-row"><kbd>A</kbd><span>IA Personal</span></div><div class="kbd-row"><kbd>?</kbd><span>Atajos</span></div></div></div></div>
+<div class="overlay-backdrop" id="kbd-backdrop" hidden></div>
+
+<!-- HABIT MODAL -->
+<div class="habit-modal" id="habit-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden><div class="habit-modal__inner"><div class="habit-modal__head"><h3 class="habit-modal__title" id="modal-title">Nuevo Hábito</h3><button class="modal-close" id="btn-close-modal"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div><div class="habit-modal__body"><input type="hidden" id="modal-habito-id" value="" /><div class="mf-group"><label class="mf-label" for="mf-nombre">Nombre *</label><input class="mf-input" type="text" id="mf-nombre" placeholder="Ej: Meditación, Ejercicio…" maxlength="48" autocomplete="off" /></div><div class="mf-group"><label class="mf-label">Categoría</label><div class="mf-cat-grid" role="group"><button class="mf-cat-btn" data-cat="bienestar" data-color="#14B8A6" type="button"><span class="mf-cat-dot" style="background:#14B8A6"></span>Bienestar</button><button class="mf-cat-btn" data-cat="salud" data-color="#F59E0B" type="button"><span class="mf-cat-dot" style="background:#F59E0B"></span>Salud</button><button class="mf-cat-btn" data-cat="mente" data-color="#8B5CF6" type="button"><span class="mf-cat-dot" style="background:#8B5CF6"></span>Mente</button><button class="mf-cat-btn" data-cat="social" data-color="#F43F5E" type="button"><span class="mf-cat-dot" style="background:#F43F5E"></span>Social</button><button class="mf-cat-btn" data-cat="trabajo" data-color="#06B6D4" type="button"><span class="mf-cat-dot" style="background:#06B6D4"></span>Trabajo</button><button class="mf-cat-btn active" data-cat="general" data-color="#10B981" type="button"><span class="mf-cat-dot" style="background:#10B981"></span>General</button></div></div><div class="mf-group"><label class="mf-label">Frecuencia</label><div class="mf-freq-row" role="group"><button class="mf-freq-btn active" data-freq="diario" type="button">Diaria</button><button class="mf-freq-btn" data-freq="semanal" type="button">Semanal</button><button class="mf-freq-btn" data-freq="mensual" type="button">Mensual</button></div><div class="mf-meta-row" id="mf-meta-row" hidden><label class="mf-label-sm" for="mf-meta-num">Meta</label><input class="mf-input mf-input--sm" type="number" id="mf-meta-num" min="1" max="7" value="3" /><span class="mf-label-sm">veces / semana</span></div></div><div class="mf-group"><label class="mf-label" for="mf-nota">Nota <span class="mf-opt">opcional</span></label><input class="mf-input" type="text" id="mf-nota" placeholder="Ej: 10 min antes de dormir" maxlength="80" /></div></div><div class="habit-modal__foot"><button class="btn btn--ghost btn--sm" id="btn-modal-cancel" type="button">Cancelar</button><button class="btn btn--primary btn--sm js-magnetic" id="btn-modal-save" type="button"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v9M1 5.5h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Crear hábito</button></div></div></div>
+<div class="overlay-backdrop" id="modal-backdrop" hidden></div>
+
+<!-- CONTEXT MENU -->
+<div class="ctx-menu" id="ctx-menu" role="menu" hidden><button class="ctx-item" id="ctx-edit" role="menuitem"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 10.5l1.5-4L9 1.5l2.5 2.5-5.5 5.5-4 1.5z" stroke="currentColor" stroke-width="1.3"/></svg>Editar</button><button class="ctx-item" id="ctx-archive" role="menuitem"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1.5" y="4" width="10" height="7.5" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 4h11M5 4V2.5h3V4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Archivar</button><div class="ctx-sep"></div><button class="ctx-item ctx-item--danger" id="ctx-delete" role="menuitem"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 4h9M5 4V2.5h3V4M3 4l.7 7h5.6L10 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Eliminar</button></div>
+
+<!-- HIDDEN THEME SW -->
+<div class="theme-sw theme-sw--hidden" role="toolbar" aria-hidden="true"><button class="theme-sw-btn tb--prism" data-theme="prism"></button><button class="theme-sw-btn tb--ember active" data-theme="ember"></button><button class="theme-sw-btn tb--abyss" data-theme="abyss"></button><button class="theme-sw-btn tb--parchment" data-theme="parchment"></button><button class="theme-sw-btn tb--grove" data-theme="grove"></button><button class="theme-sw-btn tb--minimal-light" data-theme="minimal-light"></button><button class="theme-sw-btn tb--minimal-dark" data-theme="minimal-dark"></button><button class="theme-sw-btn tb--crimson" data-theme="crimson"></button><button class="theme-sw-btn tb--glacier" data-theme="glacier"></button><button class="theme-sw-btn tb--dusk" data-theme="dusk"></button></div>
+
+
+<!-- ONBOARDING MODAL — primer acceso -->
+<div class="onboarding-modal" id="onboarding-modal" role="dialog" aria-modal="true" aria-labelledby="onboarding-title" hidden>
+  <div class="onboarding-modal__inner">
+    <div class="onboarding-steps" id="onboarding-steps">
+
+      <div class="onboarding-step" data-step="0">
+        <div class="onboarding-step__icon">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <rect width="40" height="40" rx="12" fill="var(--a-sub)"/>
+            <path d="M20 8C16 12 12 15 12 19.5a8 8 0 0016 0C28 15 24 12 20 8z" stroke="var(--a)" stroke-width="1.8" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2 class="onboarding-step__title" id="onboarding-title">Bienvenido a KIP</h2>
+        <p class="onboarding-step__desc">Tu espacio personal para construir hábitos que duran. En 3 pasos te mostramos cómo funciona.</p>
+        <button class="btn btn--primary btn--sm" id="onboarding-next-0">Empezar →</button>
+      </div>
+
+      <div class="onboarding-step" data-step="1" hidden>
+        <div class="onboarding-step__icon">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <rect width="40" height="40" rx="12" fill="var(--a-sub)"/>
+            <path d="M20 10v20M10 20h20" stroke="var(--a)" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h2 class="onboarding-step__title">Crea tu primer hábito</h2>
+        <p class="onboarding-step__desc">Pulsa <strong>Nuevo hábito</strong> en la barra superior. Dale un nombre, una categoría y una frecuencia.</p>
+        <div class="onboarding-suggestions">
+          <button class="onboarding-sug" data-sug="Meditación" data-cat="bienestar">🧘 Meditación</button>
+          <button class="onboarding-sug" data-sug="Ejercicio"  data-cat="salud">💪 Ejercicio</button>
+          <button class="onboarding-sug" data-sug="Lectura"    data-cat="mente">📖 Lectura</button>
+          <button class="onboarding-sug" data-sug="Hidratación" data-cat="salud">💧 Hidratación</button>
+        </div>
+        <button class="btn btn--primary btn--sm" id="onboarding-next-1">Siguiente →</button>
+      </div>
+
+      <div class="onboarding-step" data-step="2" hidden>
+        <div class="onboarding-step__icon">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <rect width="40" height="40" rx="12" fill="var(--a-sub)"/>
+            <path d="M13 20l5 5 9-10" stroke="var(--a)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2 class="onboarding-step__title">Márcalos cada día</h2>
+        <p class="onboarding-step__desc">Pulsa el círculo de cada hábito cuando lo completes. KIP calcula tu racha, progreso semanal y estadísticas automáticamente.</p>
+        <button class="btn btn--primary btn--sm" id="onboarding-next-2">¡Listo, empezar!</button>
+      </div>
+
+    </div>
+    <div class="onboarding-dots" id="onboarding-dots">
+      <span class="onboarding-dot onboarding-dot--active"></span>
+      <span class="onboarding-dot"></span>
+      <span class="onboarding-dot"></span>
+    </div>
+  </div>
+</div>
+<div class="overlay-backdrop" id="onboarding-backdrop" hidden></div>
+
+<!-- CONFIRM DIALOG — reemplaza window.confirm() nativo -->
+<div class="confirm-dialog" id="confirm-dialog" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" hidden>
+  <div class="confirm-dialog__box">
+    <p class="confirm-dialog__title" id="confirm-title">¿Descartar los cambios?</p>
+    <p class="confirm-dialog__desc" id="confirm-desc">Perderás lo que hayas escrito.</p>
+    <div class="confirm-dialog__actions">
+      <button class="btn btn--ghost btn--sm" id="confirm-cancel">Cancelar</button>
+      <button class="btn btn--danger btn--sm" id="confirm-ok">Descartar</button>
+    </div>
+  </div>
+</div>
+<div class="overlay-backdrop" id="confirm-backdrop" hidden></div>
+
+
+<!-- ═══ MOBILE NAV DRAWER ═══════════════════════════════════════ -->
+<!-- [FIX] Drawer de navegación real para móvil.                  -->
+<!-- JS: btn-mobile-nav abre/cierra; backdrop cierra al hacer clic -->
+<div class="mobile-nav" id="mobile-nav" role="dialog" aria-modal="true" aria-label="Navegación principal">
+  <div class="mobile-nav__panel">
+    <div class="mobile-nav__header">
+      <span class="mobile-nav__title">KIP</span>
+      <button class="modal-close" id="btn-mobile-nav-close" aria-label="Cerrar menú">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <a href="../dashboard/"    class="mobile-nav__link" data-mobile-link>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/></svg>
+      Dashboard
+    </a>
+    <a href="../habits/"       class="mobile-nav__link" data-mobile-link>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Hábitos
+    </a>
+    <a href="../activity/"     class="mobile-nav__link" data-mobile-link>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1.5 11l3.5-5 3 3 4-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Actividad
+    </a>
+    <a href="../achievements/" class="mobile-nav__link" data-mobile-link>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.6 4.8H14L10.2 9l1.4 4.5L8 11l-3.6 2.5L5.8 9 2 6.3h4.4L8 1.5z" fill="currentColor"/></svg>
+      Logros
+    </a>
+    <a href="../insights/"     class="mobile-nav__link" data-mobile-link>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.3"/><path d="M8 5v4M8 11v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Insights
+    </a>
+    <div class="mobile-nav__sep"></div>
+    <a href="../ai/"           class="mobile-nav__link mobile-nav__link--pro" data-mobile-link>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="3.5" stroke="currentColor" stroke-width="1.3"/><path d="M8 9.5V14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      IA Personal <span class="pro-badge">PRO</span>
+    </a>
+  </div>
+  <div class="mobile-nav__backdrop" id="mobile-nav-backdrop"></div>
+</div>
+
+<!-- NAVBAR -->
+<header class="navbar" role="banner">
+  <div class="navbar__inner container">
+    <a href="../dashboard/" class="navbar__logo" aria-label="KIP">
+      <div class="navbar__logo-mark"><svg width="28" height="17" viewBox="0 0 592 356" xmlns="http://www.w3.org/2000/svg"><path fill="#cb6ce6" d="M71.7 354.7C32 354.7 0 323 0 283.2c0-19.6 7.8-37.4 20.5-50.5L140.6 36.4C153 15 176 2 200.5 2c37.5 0 68 30.5 68 68c0 12.3-3.3 23.8-9 33.7L132.9 320.8C119.7 343.6 97.2 354.7 71.7 354.7Z"/><path fill="#8c52ff" d="M295.8 354.7C256.1 354.7 224.1 323 224.1 283.2c0-19.6 7.8-37.4 20.5-50.5L364.6 36.4C377 15 400 2 424.5 2c37.5 0 68 30.5 68 68c0 12.3-3.3 23.8-9 33.7L357 320.8C343.8 343.6 321.3 354.7 295.8 354.7Z"/><circle fill="#5e17eb" cx="520" cy="284" r="72"/></svg></div>
+      <span class="navbar__wordmark">KIP</span><span class="navbar__version">v6</span>
+    </a>
+    <nav class="navbar__nav" aria-label="Navegación principal">
+      <ul class="navbar__navlist" role="list">
+        <li><a href="../dashboard/" class="nav-link">Dashboard</a></li>
+        <li><a href="../habits/" class="nav-link">Hábitos</a></li>
+        <li><a href="../activity/" class="nav-link">Actividad</a></li>
+        <li><a href="../achievements/" class="nav-link">Logros</a></li>
+        <li><a href="../ai/" class="nav-link nav-link--pro">IA Personal <span class="pro-badge">PRO</span></a></li>
+      </ul>
+    </nav>
+    <div class="navbar__actions">
+      <button class="hamburger-btn btn btn--ghost btn--sm btn--icon" id="btn-mobile-nav" aria-label="Menú de navegación"><svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M0 1h16M0 6h16M0 11h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+      <button class="btn btn--ghost btn--sm btn--icon" id="btn-sound" aria-label="Sonido" data-tooltip="Activar/desactivar sonido (S)" data-tooltip-dir="down"><svg id="icon-snd-on" width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 4.5h2l3-3v10l-3-3H2V4.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M9.5 4.5c.8.7 1.2 1.6 1.2 2.5s-.4 1.8-1.2 2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><svg id="icon-snd-off" width="13" height="13" viewBox="0 0 13 13" fill="none" style="display:none"><path d="M2 4.5h2l3-3v10l-3-3H2V4.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M9 4.5l3 3M12 4.5l-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></button>
+      <button class="cmd-trigger" id="btn-cmd" data-tooltip="Búsqueda y acciones (⌘K)" data-tooltip-dir="down"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="5.5" cy="5.5" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M9 9l2.5 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><kbd>⌘K</kbd></button>
+      <button class="btn btn--primary btn--sm js-magnetic" id="btn-nuevo-habito" data-tooltip="Nuevo hábito (N)" data-tooltip-dir="down"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v9M1 5.5h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span class="btn-txt">Nuevo hábito</span></button>
+      <div class="account-menu" id="account-menu">
+        <button class="account-btn js-magnetic" id="btn-account" aria-haspopup="true" aria-expanded="false" aria-controls="account-drop">
+          <div class="account-btn__av" id="account-avatar">U</div>
+          <svg class="account-btn__chev" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </button>
+        <div class="account-drop" id="account-drop" role="menu" hidden>
+          <div class="account-drop__header">
+            <div class="account-drop__av" id="account-drop-avatar">U</div>
+            <div class="account-drop__info">
+              <span class="account-drop__name" id="account-drop-name">Usuario</span>
+              <span class="account-drop__email" id="account-drop-email"></span>
+            </div>
+          </div>
+          <div class="account-drop__plan-row" id="account-drop-plan">Plan Gratuito</div>
+          <div class="account-drop__sep"></div>
+          <button class="account-drop__item" data-account-action="settings"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="2" stroke="currentColor" stroke-width="1.2"/><path d="M6.5 1v1.5M6.5 10v1.5M1 6.5h1.5M10 6.5h1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Configuración</button>
+          <button class="account-drop__item" data-account-action="themes"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.2"/></svg>Temas</button>
+          <div class="account-drop__sep"></div>
+          <button class="account-drop__item account-drop__item--premium" data-account-action="upgrade"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1.5l1.3 3.8H12L8.7 7.7l1.2 3.8L6.5 9.3l-3.4 2.2 1.2-3.8L1 5.3h4.2L6.5 1.5z" fill="currentColor"/></svg>Actualizar a Premium</button>
+          <div class="account-drop__sep"></div>
+          <button class="account-drop__item account-drop__item--danger" data-account-action="logout"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M5 11H2.5A1.5 1.5 0 011 9.5v-6A1.5 1.5 0 012.5 2H5M9 9l3-2.5L9 4M12 6.5H5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Cerrar sesión</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- ═══ SETTINGS PANEL + KBD FAB ═══ -->
+<aside class="settings-panel" id="settings-panel" role="dialog" aria-modal="true" hidden><div class="settings-panel__inner"><div class="settings-panel__head"><h2 class="settings-panel__title">Configuración</h2><button class="modal-close" id="btn-close-settings"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div><nav class="settings-tabs"><button class="settings-tab active" data-settings-section="general">General</button><button class="settings-tab" data-settings-section="notificaciones">Notif.</button><button class="settings-tab" data-settings-section="preferencias">Prefs.</button><button class="settings-tab" data-settings-section="datos">Datos</button></nav><div class="settings-body"><section class="settings-section active" id="settings-general"><div class="sf-group"><label class="sf-label" for="sf-nombre">Nombre</label><input class="sf-input" type="text" id="sf-nombre" value="" /></div><div class="sf-group"><label class="sf-label">Email</label><input class="sf-input sf-input--readonly" type="email" id="sf-email" value="" readonly /></div><div class="sf-group"><label class="sf-label" for="sf-tz">Zona horaria</label><select class="sf-select" id="sf-tz"><option>América / Ciudad de México (UTC-6)</option><option>América / Bogotá (UTC-5)</option><option>Europa / Madrid (UTC+1)</option></select></div><div class="sf-group"><label class="sf-label" for="sf-idioma">Idioma</label><select class="sf-select" id="sf-idioma"><option value="es" selected>Español</option><option value="en">English</option></select></div><button class="btn btn--primary btn--sm" id="btn-save-general">Guardar</button></section><section class="settings-section" id="settings-notificaciones" hidden><div class="sf-toggle-row"><div class="sf-toggle-info"><span class="sf-toggle-label">Recordatorios</span><span class="sf-toggle-desc">Aviso diario</span></div><button class="sf-toggle active" id="toggle-recordatorios" role="switch" aria-checked="true"><span class="sf-toggle__thumb"></span></button></div><div class="sf-group" id="notif-hora-group"><label class="sf-label" for="sf-hora-notif">Hora</label><input class="sf-input" type="time" id="sf-hora-notif" value="08:00" style="width:auto" /></div></section><section class="settings-section" id="settings-preferencias" hidden><div class="sf-toggle-row"><div class="sf-toggle-info"><span class="sf-toggle-label">Animaciones</span></div><button class="sf-toggle active" id="toggle-animaciones" role="switch" aria-checked="true"><span class="sf-toggle__thumb"></span></button></div><div class="sf-toggle-row"><div class="sf-toggle-info"><span class="sf-toggle-label">Sonido</span></div><button class="sf-toggle active" id="toggle-sonido-pref" role="switch" aria-checked="true"><span class="sf-toggle__thumb"></span></button></div><div class="sf-toggle-row"><div class="sf-toggle-info"><span class="sf-toggle-label">Confetti</span></div><button class="sf-toggle active" id="toggle-confetti" role="switch" aria-checked="true"><span class="sf-toggle__thumb"></span></button></div><div class="sf-toggle-row"><div class="sf-toggle-info"><span class="sf-toggle-label">Modo enfoque</span></div><button class="sf-toggle" id="toggle-enfoque" role="switch" aria-checked="false"><span class="sf-toggle__thumb"></span></button></div><div class="sf-group sf-group--mt"><p class="sf-label">Tema</p><div class="sf-theme-grid"><button class="sf-theme-btn sf-theme-btn--prism" data-theme="prism"><span class="sf-theme-dot"></span>Prism</button><button class="sf-theme-btn sf-theme-btn--ember" data-theme="ember"><span class="sf-theme-dot"></span>Ember</button><button class="sf-theme-btn sf-theme-btn--abyss" data-theme="abyss"><span class="sf-theme-dot"></span>Abyss</button><button class="sf-theme-btn sf-theme-btn--parchment" data-theme="parchment"><span class="sf-theme-dot"></span>Parchment</button><button class="sf-theme-btn sf-theme-btn--grove" data-theme="grove"><span class="sf-theme-dot"></span>Grove</button><button class="sf-theme-btn sf-theme-btn--minimal-light" data-theme="minimal-light"><span class="sf-theme-dot"></span>Minimal Light</button><button class="sf-theme-btn sf-theme-btn--minimal-dark" data-theme="minimal-dark"><span class="sf-theme-dot"></span>Minimal Dark</button><button class="sf-theme-btn sf-theme-btn--crimson" data-theme="crimson"><span class="sf-theme-dot"></span>Crimson</button><button class="sf-theme-btn sf-theme-btn--glacier" data-theme="glacier"><span class="sf-theme-dot"></span>Glacier</button><button class="sf-theme-btn sf-theme-btn--dusk" data-theme="dusk"><span class="sf-theme-dot"></span>Dusk</button></div></div></section><section class="settings-section" id="settings-datos" hidden><p class="sf-desc">Gestiona tu información personal.</p><button class="btn btn--ghost btn--sm" id="btn-export-data" style="margin-bottom:var(--s5)">Exportar datos</button><div class="sf-danger-zone"><p class="sf-danger-title">Zona de peligro</p><p class="sf-danger-desc">Elimina permanentemente tu cuenta.</p><button class="btn btn--danger btn--sm" id="btn-delete-account">Eliminar cuenta</button></div><div class="delete-confirm" id="delete-confirm" hidden><p class="delete-confirm__text">Escribe <strong>ELIMINAR</strong>:</p><input class="sf-input" type="text" id="delete-confirm-input" placeholder="ELIMINAR" style="margin-bottom:var(--s3)" /><div style="display:flex;gap:var(--s2)"><button class="btn btn--ghost btn--sm" id="btn-delete-cancel">Cancelar</button><button class="btn btn--danger btn--sm" id="btn-delete-confirm" disabled>Eliminar</button></div></div></section></div></div></aside>
+<div class="overlay-backdrop settings-backdrop" id="settings-backdrop" hidden></div>
+
+<main class="container page-main" id="main" role="main" tabindex="-1">
+
+  <!-- Hero -->
+  <div class="pol-hero">
+    <p class="pol-hero__eyebrow">Legal · Transparencia</p>
+    <h1 class="pol-hero__title">Política de<br/>Privacidad</h1>
+    <p class="pol-hero__meta">En KIP creemos que tus datos son tuyos. Esta página explica exactamente qué recopilamos, por qué y cómo lo protegemos — sin lenguaje confuso.</p>
+    <div class="pol-hero__date">
+      <span class="pol-hero__date-dot"></span>
+      Última actualización: <time datetime="2026-01-15">15 de enero de 2026</time>
+    </div>
+  </div>
+
+  <!-- Layout con TOC + contenido -->
+  <div class="pol-layout">
+
+    <!-- Table of Contents -->
+    <aside class="pol-toc" aria-label="Tabla de contenidos">
+      <p class="pol-toc__title">Contenido</p>
+      <ol class="pol-toc__list" role="list">
+        <li class="pol-toc__item"><a href="#seccion-1"><span class="pol-toc__num">01</span>Información que recopilamos</a></li>
+        <li class="pol-toc__item"><a href="#seccion-2"><span class="pol-toc__num">02</span>Cómo usamos tus datos</a></li>
+        <li class="pol-toc__item"><a href="#seccion-3"><span class="pol-toc__num">03</span>IA y datos de hábitos</a></li>
+        <li class="pol-toc__item"><a href="#seccion-4"><span class="pol-toc__num">04</span>Almacenamiento local</a></li>
+        <li class="pol-toc__item"><a href="#seccion-5"><span class="pol-toc__num">05</span>Compartir información</a></li>
+        <li class="pol-toc__item"><a href="#seccion-6"><span class="pol-toc__num">06</span>Seguridad</a></li>
+        <li class="pol-toc__item"><a href="#seccion-7"><span class="pol-toc__num">07</span>Tus derechos</a></li>
+        <li class="pol-toc__item"><a href="#seccion-8"><span class="pol-toc__num">08</span>Cookies</a></li>
+        <li class="pol-toc__item"><a href="#seccion-9"><span class="pol-toc__num">09</span>Menores de edad</a></li>
+        <li class="pol-toc__item"><a href="#seccion-10"><span class="pol-toc__num">10</span>Cambios a esta política</a></li>
+        <li class="pol-toc__item"><a href="#seccion-11"><span class="pol-toc__num">11</span>Contacto</a></li>
+      </ol>
+    </aside>
+
+    <!-- Content -->
+    <div class="pol-content" role="document">
+
+      <!-- §1 Información que recopilamos -->
+      <section class="pol-section" id="seccion-1" aria-labelledby="tit-1">
+        <span class="pol-section__num">01</span>
+        <h2 class="pol-section__title" id="tit-1">Información que recopilamos</h2>
+        <div class="pol-section__body">
+          <p>KIP recopila únicamente la información necesaria para ofrecerte una experiencia de seguimiento de hábitos personalizada y funcional. No recopilamos más de lo necesario.</p>
+
+          <table class="pol-table" aria-label="Tipos de datos recopilados">
+            <thead>
+              <tr>
+                <th scope="col">Tipo de dato</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Obligatorio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Nombre</td>
+                <td>El nombre que usas para personalizar tu experiencia. Puedes usar un apodo.</td>
+                <td>No</td>
+              </tr>
+              <tr>
+                <td>Correo electrónico</td>
+                <td>Para autenticación y recuperación de cuenta. No se usa para marketing sin consentimiento.</td>
+                <td>Sí (para cuenta)</td>
+              </tr>
+              <tr>
+                <td>Datos de hábitos</td>
+                <td>Nombres de hábitos, frecuencias, categorías, notas y fechas de completado.</td>
+                <td>Sí (es la función principal)</td>
+              </tr>
+              <tr>
+                <td>Preferencias de app</td>
+                <td>Tema visual, configuración de sonido, zona horaria. Se guardan localmente en tu dispositivo.</td>
+                <td>No</td>
+              </tr>
+              <tr>
+                <td>Datos de uso</td>
+                <td>Páginas visitadas y funciones usadas (sin datos personales). Para mejorar la experiencia.</td>
+                <td>No</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>Actualmente, en la versión actual de KIP, <strong>todos los datos se guardan localmente en tu dispositivo</strong> usando el almacenamiento del navegador (localStorage). No existen servidores que almacenen tus hábitos.</p>
+        </div>
+      </section>
+
+      <div class="pol-divider" aria-hidden="true"></div>
+
+      <!-- §2 Cómo usamos tus datos -->
+      <section class="pol-section" id="seccion-2" aria-labelledby="tit-2">
+        <span class="pol-section__num">02</span>
+        <h2 class="pol-section__title" id="tit-2">Cómo usamos tus datos</h2>
+        <div class="pol-section__body">
+          <p>Usamos tu información exclusivamente para proporcionarte el servicio. Los usos específicos son:</p>
+          <p><strong>Operación del servicio.</strong> Guardar tus hábitos, registrar tus completados, calcular tus rachas y mostrarte estadísticas precisas de tu progreso.</p>
+          <p><strong>Personalización.</strong> Adaptar la interfaz a tus preferencias de tema, nombre y configuración. Estas opciones se guardan en tu dispositivo.</p>
+          <p><strong>Asistente de IA (plan Premium).</strong> Si utilizas la función de IA Personal, tus datos de hábitos se envían temporalmente al modelo de lenguaje para generar respuestas contextualizadas. Ver la sección 3 para más detalles.</p>
+          <p><strong>Mejoras del producto.</strong> Datos agregados y anónimos de uso para entender qué funciones son más valoradas. Nunca se identifican usuarios individuales.</p>
+          <p><strong>Comunicaciones.</strong> Solo enviaremos correos relacionados con tu cuenta (confirmaciones, recuperación de contraseña). No enviaremos marketing sin tu consentimiento explícito.</p>
+        </div>
+      </section>
+
+      <div class="pol-divider" aria-hidden="true"></div>
+
+      <!-- §3 IA y datos de hábitos -->
+      <section class="pol-section" id="seccion-3" aria-labelledby="tit-3">
+        <span class="pol-section__num">03</span>
+        <h2 class="pol-section__title" id="tit-3">IA y datos de hábitos</h2>
+        <div class="pol-section__body">
+          <div class="pol-highlight" role="note">
+            <div class="pol-highlight__icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.5 4.5H14L10.5 8.5 12 13 8 10.5 4 13l1.5-4.5L2 6h4.5L8 1.5z" fill="currentColor" opacity="0.8"/></svg>
+            </div>
+            <p class="pol-highlight__title">Compromiso de privacidad con IA</p>
+            <p class="pol-highlight__body">Tus conversaciones con la IA de KIP nunca se usan para entrenar modelos de inteligencia artificial. Cada sesión de chat es independiente y no se almacena de forma permanente.</p>
+          </div>
+
+          <p>La función de <strong>IA Personal</strong> (disponible en el plan Premium) usa la API de Anthropic para generar respuestas personalizadas basadas en tus datos de hábitos. Esto implica:</p>
+          <p><strong>Datos transmitidos:</strong> Cuando haces una pregunta al asistente, KIP envía a Anthropic un resumen de tus hábitos actuales (nombres, frecuencias, progreso), junto con el historial de la conversación activa en esa sesión.</p>
+          <p><strong>Datos NO transmitidos:</strong> Tu nombre completo, correo electrónico, contraseña ni ningún identificador personal se envía a Anthropic.</p>
+          <p><strong>Retención:</strong> Las conversaciones no se guardan en servidores de KIP ni de Anthropic una vez que cierras o limpias el chat. El historial existe únicamente en memoria durante la sesión activa.</p>
+          <p>Para conocer cómo Anthropic maneja los datos, consulta su <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener noreferrer">Política de Privacidad</a>.</p>
+        </div>
+      </section>
+
+      <div class="pol-divider" aria-hidden="true"></div>
+
+      <!-- §4 Almacenamiento local -->
+      <section class="pol-section" id="seccion-4" aria-labelledby="tit-4">
+        <span class="pol-section__num">04</span>
+        <h2 class="pol-section__title" id="tit-4">Almacenamiento local</h2>
+        <div class="pol-section__body">
+          <p>KIP utiliza el <strong>almacenamiento local del navegador (localStorage)</strong> para guardar tu información directamente en tu dispositivo. Esto significa:</p>
+          <p>Tus datos <strong>no se almacenan en ningún servidor externo</strong> en la versión actual. Solo existen en tu navegador, en tu dispositivo.</p>
+          <p>Si limpias los datos de tu navegador, borras los datos de la app. Si usas KIP en otro dispositivo o navegador, comenzarás desde cero. En versiones futuras, ofreceremos sincronización opcional en la nube (con encriptación end-to-end) para solucionar esto.</p>
+
+          <table class="pol-table" aria-label="Claves de almacenamiento local">
+            <thead>
+              <tr>
+                <th scope="col">Clave</th>
+                <th scope="col">Contenido</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>kip_tema</td>
+                <td>Tema visual seleccionado (ej: "ember", "abyss")</td>
+              </tr>
+              <tr>
+                <td>kip_nombre</td>
+                <td>Tu nombre o apodo configurado</td>
+              </tr>
+              <tr>
+                <td>kip_habitos</td>
+                <td>Lista de hábitos (nombre, categoría, frecuencia, nota)</td>
+              </tr>
+              <tr>
+                <td>kip_registros</td>
+                <td>Fechas en que cada hábito fue completado</td>
+              </tr>
+              <tr>
+                <td>kip_prefs</td>
+                <td>Preferencias de animaciones, sonido, confetti</td>
+              </tr>
+              <tr>
+                <td>kip_muted</td>
+                <td>Estado del sonido (activo/silenciado)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>Puedes exportar todos tus datos en cualquier momento desde <strong>Configuración → Datos → Exportar datos</strong>. El archivo descargado es un JSON legible que puedes abrir con cualquier editor de texto.</p>
+        </div>
+      </section>
+
+      <div class="pol-divider" aria-hidden="true"></div>
+
+      <!-- §5 Compartir información -->
+      <section class="pol-section" id="seccion-5" aria-labelledby="tit-5">
+        <span class="pol-section__num">05</span>
+        <h2 class="pol-section__title" id="tit-5">Compartir información con terceros</h2>
+        <div class="pol-section__body">
+          <div class="pol-highlight pol-highlight--warn" role="note">
+            <div class="pol-highlight__icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L2 13h12L8 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 6v4M8 11v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <p class="pol-highlight__title">No vendemos tus datos</p>
+            <p class="pol-highlight__body">KIP no vende, arrienda ni monetiza tu información personal a terceros. Nunca lo haremos sin tu consentimiento explícito.</p>
+          </div>
+
+          <p>Solo compartimos datos en los siguientes casos excepcionales:</p>
+          <p><strong>Anthropic (solo usuarios de IA Personal):</strong> Como se explica en la sección 3, los datos de contexto de hábitos se envían para generar respuestas de IA. Esto ocurre únicamente cuando usas la función de chat.</p>
+          <p><strong>Requerimiento legal:</strong> Si una autoridad competente con jurisdicción lo requiere mediante orden judicial válida. En este caso, notificaremos al usuario si la ley lo permite.</p>
+          <p><strong>Proveedores de infraestructura:</strong> En versiones futuras con sincronización en la nube, usaremos proveedores de hosting que solo actúan como procesadores de datos bajo nuestras instrucciones y estrictos acuerdos de confidencialidad.</p>
+        </div>
+      </section>
+
+      <div class="pol-divider" aria-hidden="true"></div>
+
+      <!-- §6 Seguridad -->
+      <section class="pol-section" id="seccion-6" aria-labelledby="tit-6">
+        <span class="pol-section__num">06</span>
+        <h2 class="pol-section__title" id="tit-6">Seguridad de los datos</h2>
+        <div class="pol-section__body">
+          <p>Tomamos la seguridad en serio y aplicamos las siguientes medidas:</p>
+          <p><strong>Almacenamiento local.</strong> Dado que los datos se almacenan en tu dispositivo, su seguridad depende en gran medida de la seguridad de tu dispositivo y navegador. Recomendamos mantener tu sistema operativo y navegador actualizados.</p>
+          <p><strong>Comunicaciones cifradas.</strong> Todas las comunicaciones entre la app y servicios externos (como la API de Anthropic) se realizan exclusivamente a través de HTTPS con TLS 1.2 o superior.</p>
+          <p><strong>Sin API keys expuestas.</strong> Las claves de API para servicios externos se mantienen en servidores backend nunca accesibles desde el navegador del usuario. Ninguna credencial sensible aparece en el código del cliente.</p>
+          <p><strong>Principio de mínimo privilegio.</strong> KIP solo solicita los permisos estrictamente necesarios. La app no accede a la cámara, micrófono, contactos ni ningún otro recurso no relacionado con el servicio.</p>
+          <p>Si descubres una vulnerabilidad de seguridad, te pedimos que nos la reportes de manera responsable a través del correo indicado en la sección de contacto antes de publicarla.</p>
+        </div>
+      </section>
+
+      <div class="pol-divider" aria-hidden="true"></div>
+
+      <!-- §7 Tus derechos -->
+      <section class="pol-section" id="seccion-7" aria-labelledby="tit-7">
+        <span class="pol-section__num">07</span>
+        <h2 class="pol-section__title" id="tit-7">Tus derechos</h2>
+        <div class="pol-section__body">
+          <p>Tienes control total sobre tu información. Puedes ejercer los siguientes derechos en cualquier momento, sin coste y sin necesidad de justificación:</p>
+
+          <div class="pol-rights" role="list">
+            <div class="pol-right" role="listitem">
+              <div class="pol-right__icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.3"/><path d="M4.5 7h5M7 4.5v5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+              </div>
+              <p class="pol-right__name">Acceso</p>
+              <p class="pol-right__desc">Exporta todos tus datos en cualquier momento desde Configuración → Datos.</p>
+            </div>
+            <div class="pol-right" role="listitem">
+              <div class="pol-right__icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 10l1.5-4L9 1.5l2.5 2.5-5.5 5.5L2 10z" stroke="currentColor" stroke-width="1.3"/></svg>
+              </div>
+              <p class="pol-right__name">Rectificación</p>
+              <p class="pol-right__desc">Edita tu nombre, hábitos y cualquier dato directamente en la app.</p>
+            </div>
+            <div class="pol-right" role="listitem">
+              <div class="pol-right__icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 4h10M5 4V2.5h4V4M3 4l.7 7h6.6L11 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              </div>
+              <p class="pol-right__name">Supresión</p>
+              <p class="pol-right__desc">Elimina tu cuenta y todos tus datos desde Configuración → Datos → Eliminar cuenta.</p>
+            </div>
+            <div class="pol-right" role="listitem">
+              <div class="pol-right__icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <p class="pol-right__name">Portabilidad</p>
+              <p class="pol-right__desc">Descarga tus datos en formato JSON estándar, compatible con cualquier sistema.</p>
+            </div>
+            <div class="pol-right" role="listitem">
+              <div class="pol-right__icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1.5L2 4v4.5c0 2.5 2 4.3 5 5 3-0.7 5-2.5 5-5V4L7 1.5z" stroke="currentColor" stroke-width="1.3"/></svg>
+              </div>
+              <p class="pol-right__name">Oposición</p>
+              <p class="pol-right__desc">Opta fuera del análisis de uso anónimo contactándonos. Sin consecuencias en el servicio.</p>
+            </div>
+            <div class="pol-right" role="listitem">
+              <div class="pol-right__icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.3"/><path d="M7 4v4M7 9v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <p class="pol-right__name">Información</p>
+              <p class="pol-right__desc">Pregúntanos qué datos tenemos sobre ti en cualquier momento. Respondemos en 30 días.</p>
+            </div>
+          </div>
+
+          <p>Para ejercer cualquier derecho que no sea directamente accesible desde la app, escríbenos a la dirección indicada en la sección de contacto.</p>
+        </div>
+      </section>
+
+      <div class="pol-divider" aria-hidden="true"></div>
+
+      <!-- §8 Cookies -->
+      <section class="pol-section" id="seccion-8" aria-labelledby="tit-8">
+        <span class="pol-section__num">08</span>
+        <h2 class="pol-section__title" id="tit-8">Cookies y tecnologías similares</h2>
+        <div class="pol-section__body">
+          <p>KIP <strong>no usa cookies de terceros</strong> ni sistemas de rastreo publicitario. La app usa exclusivamente:</p>
+          <p><strong>localStorage del navegador:</strong> Para guardar tus preferencias y datos de hábitos localmente. No es una cookie y no se envía automáticamente a ningún servidor.</p>
+          <p><strong>sessionStorage (en memoria):</strong> Para datos temporales de la sesión activa que no necesitan persistir entre sesiones, como el historial del chat de IA.</p>
+          <p>No instalamos cookies de seguimiento, cookies de análisis de terceros (como Google Analytics en su versión completa), ni píxeles de publicidad.</p>
+          <p>Si en el futuro implementamos análisis, usaremos soluciones de privacidad primero como <strong>Plausible Analytics</strong> o <strong>Fathom</strong>, que no usan cookies y son conformes con GDPR sin banner de cookies.</p>
+        </div>
+      </section>
+
+      <div class="pol-divider" aria-hidden="true"></div>
+
+      <!-- §9 Menores de edad -->
+      <section class="pol-section" id="seccion-9" aria-labelledby="tit-9">
+        <span class="pol-section__num">09</span>
+        <h2 class="pol-section__title" id="tit-9">Menores de edad</h2>
+        <div class="pol-section__body">
+          <p>KIP está dirigido a personas mayores de 13 años. No recopilamos intencionalmente información personal de niños menores de 13 años.</p>
+          <p>Si eres padre, madre o tutor y crees que tu hijo menor de 13 años ha proporcionado información personal a KIP, contáctanos para eliminar esa información de inmediato.</p>
+          <p>Para usuarios entre 13 y 18 años, recomendamos que el uso sea con conocimiento y supervisión parental, especialmente en lo que respecta a la función de IA Personal.</p>
+        </div>
+      </section>
+
+      <div class="pol-divider" aria-hidden="true"></div>
+
+      <!-- §10 Cambios a esta política -->
+      <section class="pol-section" id="seccion-10" aria-labelledby="tit-10">
+        <span class="pol-section__num">10</span>
+        <h2 class="pol-section__title" id="tit-10">Cambios a esta política</h2>
+        <div class="pol-section__body">
+          <p>Podemos actualizar esta Política de Privacidad ocasionalmente para reflejar cambios en el servicio, nuevas funcionalidades o requerimientos legales.</p>
+          <p>Cuando realicemos cambios significativos, te notificaremos a través de:</p>
+          <p>· Una notificación visible dentro de la app en la próxima sesión<br/>
+             · Un aviso en la página de inicio con la fecha de la actualización<br/>
+             · Correo electrónico si los cambios afectan sustancialmente tus derechos (solo usuarios con cuenta)</p>
+          <p>La fecha de "Última actualización" al inicio de esta página siempre refleja la versión vigente. Las versiones anteriores estarán disponibles bajo solicitud.</p>
+          <p>El uso continuado de KIP después de los cambios implica la aceptación de la política actualizada. Si no estás de acuerdo con los cambios, puedes exportar tus datos y eliminar tu cuenta antes de que entren en vigor.</p>
+        </div>
+      </section>
+
+      <div class="pol-divider" aria-hidden="true"></div>
+
+      <!-- §11 Contacto -->
+      <section class="pol-section" id="seccion-11" aria-labelledby="tit-11">
+        <span class="pol-section__num">11</span>
+        <h2 class="pol-section__title" id="tit-11">Contacto</h2>
+        <div class="pol-section__body">
+          <p>Si tienes preguntas sobre esta política, quieres ejercer algún derecho o reportar una preocupación de privacidad, no dudes en contactarnos. Nos comprometemos a responder en un plazo máximo de <strong>15 días hábiles</strong>.</p>
+        </div>
+        <div class="pol-contact">
+          <p class="pol-contact__title">¿Tienes alguna pregunta?</p>
+          <p class="pol-contact__desc">El equipo de KIP está disponible para resolver cualquier duda sobre privacidad, datos o seguridad.</p>
+          <a href="mailto:privacidad@kip.app" class="pol-contact__email">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="2.5" width="11" height="8" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M1 4.5l5.5 3.5L12 4.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            privacidad@kip.app
+          </a>
+        </div>
+      </section>
+
+    </div><!-- /.pol-content -->
+  </div><!-- /.pol-layout -->
+
+</main>
+
+<!-- ═══ SETTINGS PANEL + KBD FAB ═══ -->
+
+<button class="kbd-fab" id="btn-shortcuts" aria-label="Atajos"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="2" width="11" height="9" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M3 6h1M5 6h1M7 6h1M9 6h1M3 8h7" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg><span>?</span></button>
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer" role="contentinfo">
+  <div class="container footer__inner">
+    <div class="footer__brand"><svg width="18" height="11" viewBox="0 0 592 356" xmlns="http://www.w3.org/2000/svg"><path fill="#cb6ce6" d="M71.7 354.7C32 354.7 0 323 0 283.2c0-19.6 7.8-37.4 20.5-50.5L140.6 36.4C153 15 176 2 200.5 2c37.5 0 68 30.5 68 68c0 12.3-3.3 23.8-9 33.7L132.9 320.8C119.7 343.6 97.2 354.7 71.7 354.7Z"/><path fill="#8c52ff" d="M295.8 354.7C256.1 354.7 224.1 323 224.1 283.2c0-19.6 7.8-37.4 20.5-50.5L364.6 36.4C377 15 400 2 424.5 2c37.5 0 68 30.5 68 68c0 12.3-3.3 23.8-9 33.7L357 320.8C343.8 343.6 321.3 354.7 295.8 354.7Z"/><circle fill="#5e17eb" cx="520" cy="284" r="72"/></svg>KIP <span class="footer__ver">v6.0 Zenith</span></div>
+    <nav class="footer__links"><a href="../policies/">Privacidad</a><a href="../policies/#seccion-2">Términos</a><a href="mailto:soporte@kip.app">Soporte</a></nav>
+    <p class="footer__copy">© 2025 KIP · Todos los derechos reservados.</p>
+  </div>
+</footer>
+<script type="module" src="../../src/ui/pages/bootstrap.js"></script>
+<script type="module" src="./policies.js"></script>
+
+</body>
+</html>

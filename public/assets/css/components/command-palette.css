@@ -1,0 +1,83 @@
+/* KIP · assets/css/components/command-palette.css · §18 Command Palette */
+/* ── §18  COMMAND PALETTE ──────────────────────────────────────── */
+
+/* [BUG-CSS-01] Sin este override, display:flex sobreescribe el atributo
+   hidden del browser → la paleta (y su backdrop opaco) siempre visible,
+   bloqueando toda la UI aunque el elemento tenga hidden. */
+.cmd-palette[hidden] { display: none !important; }
+
+.cmd-palette {
+  position: fixed; inset: 0; z-index: var(--z-cmd);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding-top: 18vh;
+}
+.cmd-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(10px);
+}
+.cmd-box {
+  position: relative; z-index: 1;
+  width: 100%; max-width: 540px;
+  background: var(--bg-3);
+  border: 1px solid var(--b-1);
+  border-top: 1px solid var(--b-2);
+  border-radius: var(--r-2xl);
+  box-shadow: var(--sh-xl), 0 0 0 1px var(--a-brd);
+  overflow: hidden;
+  animation: cmdIn var(--d-base) var(--e-spring) both;
+}
+@keyframes cmdIn {
+  from { opacity:0; transform:scale(0.96) translateY(-12px); }
+  to   { opacity:1; transform:scale(1) translateY(0); }
+}
+.cmd-search-row {
+  display: flex; align-items: center; gap: var(--s3);
+  padding: var(--s4) var(--s4);
+  border-bottom: 1px solid var(--b-1);
+}
+.cmd-icon { color: var(--tx-2); flex-shrink: 0; }
+.cmd-input {
+  flex: 1;
+  background: transparent;
+  border: none; outline: none;
+  font-family: var(--f-ui); font-size: var(--tx-base);
+  color: var(--tx-1);
+}
+.cmd-input::placeholder { color: var(--tx-3); }
+.cmd-esc {
+  font-family: var(--f-mono); font-size: var(--tx-2xs);
+  color: var(--tx-3); border: 1px solid var(--b-1);
+  border-radius: var(--r-xs); padding: 2px 5px;
+  background: var(--bg-2);
+}
+.cmd-results { padding: var(--s2); }
+.cmd-section-label {
+  font-size: var(--tx-2xs); font-weight: var(--fw-semi);
+  color: var(--tx-3); text-transform: uppercase; letter-spacing: var(--ls-caps);
+  padding: var(--s2) var(--s3) var(--s1);
+}
+.cmd-item {
+  width: 100%; display: flex; align-items: center; gap: var(--s3);
+  padding: var(--s2) var(--s3); border-radius: var(--r-lg);
+  font-size: var(--tx-sm); color: var(--tx-1); text-align: left;
+  justify-content: space-between;
+  transition: background var(--d-snap);
+}
+.cmd-item:hover, .cmd-item--active { background: var(--a-sub); color: var(--tx-1); }
+.cmd-item__icon {
+  width: 28px; height: 28px;
+  background: var(--bg-2); border: 1px solid var(--b-1);
+  border-radius: var(--r-sm);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--a); flex-shrink: 0;
+}
+.cmd-item span { flex: 1; }
+.cmd-item kbd {
+  font-family: var(--f-mono); font-size: var(--tx-2xs);
+  color: var(--tx-3); border: 1px solid var(--b-1);
+  border-radius: var(--r-xs); padding: 2px 5px;
+  background: var(--bg-2);
+}
+
+

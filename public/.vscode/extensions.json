@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "ritwickdey.LiveServer",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "formulahendry.auto-rename-tag",
+    "christian-kohler.path-intellisense",
+    "naumovs.color-highlight",
+    "ecmel.vscode-html-css",
+    "pranaygp.vscode-css-peek",
+    "zignd.html-css-class-completion"
+  ]
+}

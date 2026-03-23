@@ -1,0 +1,46 @@
+{
+  "name": "KIP · Habit Tracker",
+  "short_name": "KIP",
+  "description": "Seguimiento de hábitos con IA personal. Rachas, analíticas y logros.",
+  "start_url": "./app/dashboard/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#8c52ff",
+  "background_color": "#0f0f12",
+  "lang": "es",
+  "dir": "ltr",
+  "categories": [
+    "health",
+    "lifestyle",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "prefer_related_applications": false,
+  "scope": "./",
+  "_note": "Shortcuts requieren URLs absolutas. Activar con dominio real renombrando _shortcuts_production_only a shortcuts."
+}

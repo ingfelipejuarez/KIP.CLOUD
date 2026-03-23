@@ -1,0 +1,214 @@
+/* KIP · assets/css/components/share-btn.css — rediseñado v6 */
+
+/* ── Contenedor — inline en el hero card ────────────────────────── */
+.share-tooltip-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  /* [FIX-BUG3] Necesario para que el tooltip absoluto no sea cortado
+     por ningún ancestro con overflow:hidden */
+  overflow: visible;
+}
+
+/* ── Fila racha + compartir ─────────────────────────────────────── */
+.streak-row {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  flex-wrap: wrap;
+}
+
+/* ── Botón principal — compacto, amber, coherente con el sistema ── */
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  background: var(--a-sub);
+  color: var(--a);
+  border: 1px solid var(--a-brd);
+  padding: 5px 10px;
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  font-family: var(--f-sans);
+  font-size: var(--tx-xs);
+  font-weight: var(--fw-mid);
+  white-space: nowrap;
+  position: relative;
+  z-index: 1;
+  transition:
+    background var(--d-fast) var(--e-out),
+    border-color var(--d-fast) var(--e-out),
+    transform var(--d-fast) var(--e-spring),
+    box-shadow var(--d-fast) var(--e-out);
+}
+
+.share-btn:hover {
+  background: var(--a-muted);
+  border-color: var(--a);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--a-glow);
+}
+.share-btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.share-btn__text {
+  letter-spacing: 0.01em;
+}
+
+.share-btn__icon {
+  color: var(--a);
+  flex-shrink: 0;
+  transition: transform var(--d-base) var(--e-spring);
+}
+.share-btn:hover .share-btn__icon { transform: rotate(20deg) scale(1.1); }
+
+/* ── Tooltip — abre HACIA ARRIBA para no tapar el contenido ──────── */
+.share-tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.9) translateY(4px);
+  width: 210px;
+  background: var(--bg-3);
+  border: 1px solid var(--b-2);
+  border-radius: var(--r-xl);
+  padding: var(--s4);
+  box-shadow: var(--sh-xl);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  /* [FIX-BUG3] --z-drop (100) quedaba por debajo de otros elementos.
+     --z-float (300) garantiza que el tooltip se pinte por encima de
+     cualquier card, grid o sección de la página. */
+  z-index: var(--z-float);
+  transition:
+    opacity var(--d-base) var(--e-spring),
+    transform var(--d-base) var(--e-spring),
+    visibility var(--d-base);
+}
+
+/* Flecha apuntando al botón (abajo del tooltip) */
+.share-tooltip::before {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  background: var(--bg-3);
+  border-right: 1px solid var(--b-2);
+  border-bottom: 1px solid var(--b-2);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.share-tooltip-wrap:hover .share-tooltip,
+.share-tooltip-wrap:focus-within .share-tooltip {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) scale(1) translateY(0);
+}
+
+/* ── Label del tooltip ──────────────────────────────────────────── */
+.share-tooltip__label {
+  font-size: var(--tx-xs);
+  color: var(--tx-2);
+  text-align: center;
+  margin-bottom: var(--s3);
+  font-family: var(--f-mono);
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+}
+
+/* ── Íconos sociales ────────────────────────────────────────────── */
+.share-socials {
+  display: flex;
+  justify-content: center;
+  gap: var(--s3);
+  margin-bottom: var(--s3);
+}
+
+.share-social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--bg-2);
+  border: 1px solid var(--b-1);
+  cursor: pointer;
+  transition:
+    transform var(--d-base) var(--e-spring),
+    background var(--d-fast),
+    box-shadow var(--d-fast),
+    border-color var(--d-fast);
+}
+
+.share-social svg {
+  width: 16px; height: 16px;
+  fill: var(--tx-2);
+  transition: fill var(--d-fast), transform var(--d-base) var(--e-spring);
+}
+
+.share-social:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 6px 16px rgba(0,0,0,.25);
+}
+.share-social:active { transform: translateY(-1px) scale(1.05); }
+.share-social:hover svg { fill: #fff; transform: scale(1.1); }
+
+/* Colores por red */
+.share-social--twitter:hover  { background: #1da1f2; border-color: #1da1f2; }
+.share-social--whatsapp:hover { background: #25d366; border-color: #25d366; }
+.share-social--copy:hover     { background: var(--a); border-color: var(--a); }
+
+/* ── Separador ──────────────────────────────────────────────────── */
+.share-tooltip__sep {
+  height: 1px;
+  background: var(--b-1);
+  margin: var(--s2) 0;
+}
+
+/* ── Preview de texto ───────────────────────────────────────────── */
+.share-tooltip__preview {
+  font-size: var(--tx-xs);
+  color: var(--tx-2);
+  text-align: center;
+  line-height: 1.4;
+}
+.share-tooltip__preview strong {
+  color: var(--a);
+  font-weight: var(--fw-semi);
+}
+
+/* ── Mobile: tooltip controlado por clase JS ─────────────────────── */
+.share-tooltip-wrap--active .share-tooltip {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) scale(1) translateY(0);
+}
+
+@media (max-width: 480px) {
+  /* [FIX] Ancho dinámico para evitar overflow en ambos bordes del viewport */
+  .share-tooltip {
+    width: min(210px, calc(100vw - 32px));
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%) scale(0.9) translateY(4px);
+    bottom: calc(100% + 10px);
+  }
+  .share-tooltip-wrap:hover .share-tooltip,
+  .share-tooltip-wrap:focus-within .share-tooltip,
+  .share-tooltip-wrap--active .share-tooltip {
+    transform: translateX(-50%) scale(1) translateY(0);
+  }
+  .share-tooltip::before {
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+  }
+}
+

@@ -1,0 +1,35 @@
+{
+  "name": "kip",
+  "version": "1.0.0",
+  "description": "KIP Habit Tracker — Monolito con RAG",
+  "type": "module",
+  "main": "src/index.js",
+  "engines": { "node": ">=20.0.0" },
+  "scripts": {
+    "start":          "node src/index.js",
+    "dev":            "node --watch src/index.js",
+    "db:push":        "prisma db push",
+    "db:migrate":     "prisma migrate dev",
+    "db:deploy":      "prisma migrate deploy",
+    "db:seed":        "node prisma/seed.js",
+    "rag:seed":       "node prisma/knowledge-seed.js",
+    "rag:embed":      "node scripts/embed-knowledge.js",
+    "build":          "prisma generate && prisma migrate deploy && node prisma/seed.js && node prisma/knowledge-seed.js"
+  },
+  "dependencies": {
+    "@prisma/client":    "^5.14.0",
+    "bcryptjs":          "^2.4.3",
+    "cookie-parser":     "^1.4.6",
+    "cors":              "^2.8.5",
+    "express":           "^4.19.2",
+    "express-rate-limit":"^7.3.1",
+    "helmet":            "^7.1.0",
+    "jsonwebtoken":      "^9.0.2",
+    "uuid":              "^10.0.0",
+    "zod":               "^3.23.8"
+  },
+  "devDependencies": {
+    "dotenv":  "^16.4.5",
+    "prisma":  "^5.14.0"
+  }
+}

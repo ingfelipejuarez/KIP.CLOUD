@@ -1,0 +1,453 @@
+/* KIP · assets/css/components/habits.css · §10 Habit Cards  kip.v7 */
+
+/* ── GRID ──────────────────────────────────────────────────────── */
+.habits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--s5);
+}
+/* [FIX] habits-grid--full ahora usa 2 columnas fijas en desktop
+   para páginas donde se quieren filas más compactas. */
+.habits-grid--full {
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s5);
+}
+@media (max-width: 768px) {
+  .habits-grid--full { grid-template-columns: 1fr; }
+}
+
+/* ── HABIT CARD ─────────────────────────────────────────────────── */
+.habit-card {
+  background: var(--bg-1);
+  border: 1px solid var(--b-1);
+  border-radius: var(--r-2xl);
+  padding: var(--s5);
+  position: relative;
+  overflow: hidden;
+  /* [FIX] animation consolidada aquí — eliminado el bloque duplicado
+     que existía más abajo con la misma regla. */
+  animation: cardReveal 0.3s var(--e-out) both;
+  transition:
+    border-color var(--d-base) var(--e-out),
+    box-shadow   var(--d-base) var(--e-out),
+    transform    var(--d-base) var(--e-out);
+}
+.habit-card:hover {
+  border-color: var(--b-2);
+  box-shadow: var(--sh-md);
+  transform: translateY(-2px);
+}
+
+/* Accent lateral — barra de color por categoría */
+.habit-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--card-cat-color, var(--a));
+  border-radius: var(--r-2xl) 0 0 var(--r-2xl);
+}
+
+/* Brillo sutil en la esquina superior derecha */
+.habit-card::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle at top right,
+    rgba(140, 82, 255, 0.06),
+    transparent 70%);
+  pointer-events: none;
+}
+
+/* Estado pendiente (explícito — habits.js lo aplica en toggle) */
+/* [FIX-P05] La clase existía en el JS pero no en el CSS — clase huérfana. */
+.habit-card--pending {
+  /* Estado neutro — hereda estilos base de .habit-card */
+}
+
+/* Estado completado */
+.habit-card--done {
+  border-color: var(--a-brd);
+  background: var(--bg-1); box-shadow: inset 0 0 0 1px var(--a-sub);
+}
+.habit-card--done::before {
+  background: var(--a);
+  width: 4px;
+  box-shadow: 0 0 8px var(--a-glow);
+}
+
+/* ── BOTÓN DE OPCIONES (⋮) ──────────────────────────────────────── */
+.hc-more {
+  position: absolute; top: var(--s3); right: var(--s3);
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--tx-3);
+  border-radius: var(--r-md);
+  /* [FIX] visibility:hidden saca el botón del tab order cuando no es
+     visible, evitando que usuarios de teclado hagan foco en él. */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 2;
+  transition:
+    color       var(--d-snap),
+    background  var(--d-snap),
+    opacity     var(--d-fast),
+    visibility  var(--d-fast);
+}
+.habit-card:hover .hc-more,
+.habit-card:focus-within .hc-more {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.hc-more:hover { color: var(--tx-1); background: var(--bg-hover); }
+
+/* ── FILA SUPERIOR ───────────────────────────────────────────────── */
+.hc-top {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  margin-bottom: var(--s4);
+  padding-right: 28px; /* evitar solapamiento con .hc-more */
+}
+
+/* Icono de categoría */
+.hc-icon {
+  width: 40px; height: 40px; flex-shrink: 0;
+  border-radius: var(--r-lg);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform var(--d-fast) var(--e-spring);
+}
+.habit-card:hover .hc-icon { transform: scale(1.08); }
+
+.hci--teal   { background: rgba(20,184,166,.14);  color: #14B8A6; }
+.hci--amber  { background: rgba(245,158,11,.14);  color: var(--a); }
+.hci--violet { background: rgba(139,92,246,.14);  color: #8B5CF6; }
+.hci--rose   { background: rgba(244,63,94,.14);   color: #F43F5E; }
+.hci--cyan   { background: rgba(6,182,212,.14);   color: #06B6D4; }
+.hci--green  { background: rgba(16,185,129,.14);  color: #10B981; }
+
+/* Info del hábito */
+.hc-info { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; }
+.hc-name {
+  font-size: var(--tx-sm); font-weight: var(--fw-semi);
+  color: var(--tx-1);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  letter-spacing: -.01em;
+}
+.habit-card--done .hc-name { color: var(--tx-2); text-decoration: line-through; text-decoration-color: var(--tx-3); }
+
+.hc-meta { display: flex; align-items: center; gap: var(--s2); flex-wrap: wrap; }
+.hc-freq {
+  font-size: var(--tx-xs); color: var(--tx-3);
+  font-family: var(--f-mono);
+  background: var(--bg-2); border: 1px solid var(--b-1);
+  border-radius: var(--r-pill);
+  padding: 1px 7px;
+}
+
+/* Badge de tendencia */
+.hc-trend {
+  font-size: var(--tx-2xs); font-family: var(--f-mono);
+  padding: 1px 6px; border-radius: var(--r-pill);
+  display: inline-flex; align-items: center; gap: 2px;
+}
+.hc-trend--up   { color: #10B981; background: rgba(16,185,129,.10); }
+.hc-trend--down { color: #F43F5E; background: rgba(244,63,94,.10); }
+.hc-trend--flat { color: var(--tx-3); background: var(--bg-2); }
+
+/* ── CHECKBOX ────────────────────────────────────────────────────── */
+.hc-check {
+  width: 32px; height: 32px; flex-shrink: 0;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin-left: auto;
+  transition: all var(--d-fast) var(--e-spring);
+  position: relative;
+  flex-shrink: 0;
+}
+.hc-check__icon { transition: opacity var(--d-fast), transform var(--d-fast); }
+
+.hc-check--pending {
+  border: 1.5px solid var(--b-2);
+  background: transparent;
+}
+.hc-check--pending:hover {
+  border-color: var(--a);
+  background: var(--a-sub);
+  transform: scale(1.1);
+}
+.hc-check--pending .hc-check__icon { opacity: 0; }
+.hc-check--pending:hover .hc-check__icon { opacity: 0.4; color: var(--a); }
+
+.hc-check--done {
+  background: var(--a);
+  border: 1.5px solid var(--a);
+  box-shadow: 0 0 0 4px var(--a-sub), 0 0 16px var(--a-glow);
+}
+.hc-check--done .hc-check__icon { opacity: 1; color: var(--tx-on-a); }
+.hc-check--done:hover { transform: scale(0.95); }
+
+/* ── BARRA DE PROGRESO ───────────────────────────────────────────── */
+.hc-prog { margin-bottom: var(--s3); }
+.hc-prog-track {
+  height: 3px;
+  background: var(--bg-2);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+  margin-bottom: var(--s2);
+}
+.hc-prog-fill {
+  height: 100%;
+  width: var(--prog, 0%);
+  background: linear-gradient(90deg, var(--card-cat-color, var(--a-lo)), var(--card-cat-color, var(--a)));
+  border-radius: var(--r-pill);
+  transition: width 0.8s var(--e-out);
+  box-shadow: 0 0 4px var(--a-glow);
+}
+.hc-prog-stats {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.hc-prog-label {
+  font-size: var(--tx-2xs); color: var(--tx-3);
+  font-family: var(--f-mono);
+}
+.hc-prog-pct {
+  font-size: var(--tx-2xs); font-family: var(--f-mono);
+  color: var(--card-cat-color, var(--a));
+  font-weight: var(--fw-semi);
+}
+
+/* ── NOTA INLINE ─────────────────────────────────────────────────── */
+.hc-note-wrap {
+  position: relative;
+  cursor: pointer;
+  border-radius: var(--r-sm);
+  padding: 3px 4px;
+  margin: 0 -4px;
+  transition: background var(--d-fast);
+  min-height: 22px;
+}
+.hc-note-wrap:hover { background: var(--bg-hover); }
+
+.hc-note {
+  display: flex; align-items: center; gap: var(--s2);
+  font-size: var(--tx-xs); color: var(--tx-3);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  line-height: 1.4;
+  user-select: none;
+}
+.hc-note svg { flex-shrink: 0; opacity: 0.6; }
+.hc-note--text  { color: var(--tx-2); }
+.hc-note--empty { opacity: 0.45; }
+
+.hc-note-edit {
+  display: none;
+  width: 100%;
+  background: var(--bg-0);
+  border: 1px solid var(--a-brd);
+  border-radius: var(--r-sm);
+  padding: 3px 8px;
+  font-size: var(--tx-xs);
+  color: var(--tx-1);
+  font-family: var(--f-sans);
+  outline: none;
+  transition: box-shadow var(--d-fast);
+}
+.hc-note-edit:focus { box-shadow: 0 0 0 3px var(--a-sub); }
+.hc-note-wrap--editing .hc-note      { display: none; }
+.hc-note-wrap--editing .hc-note-edit { display: block; }
+
+/* ── FILTROS DE CATEGORÍA ────────────────────────────────────────── */
+.cat-filters {
+  display: flex; align-items: center; flex-wrap: wrap; gap: var(--s2);
+}
+.cat-pill {
+  display: flex; align-items: center; gap: var(--s2);
+  font-size: var(--tx-xs); font-weight: var(--fw-mid);
+  color: var(--tx-2);
+  padding: 4px 12px;
+  border: 1px solid var(--b-1);
+  border-radius: var(--r-pill);
+  background: var(--bg-1);
+  transition: all var(--d-fast);
+  white-space: nowrap;
+}
+.cat-pill:hover { color: var(--tx-1); border-color: var(--b-2); background: var(--bg-2); }
+.cat-pill--active {
+  color: var(--tx-1);
+  border-color: var(--a-brd);
+  background: var(--a-sub);
+  box-shadow: 0 0 0 1px var(--a-brd);
+}
+.cat-pill__dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── DRAG & DROP ─────────────────────────────────────────────────── */
+.habit-card[draggable="true"] { cursor: grab; }
+.habit-card[draggable="true"]:active { cursor: grabbing; }
+.habit-card.is-dragging {
+  opacity: 0.3;
+  box-shadow: none;
+  transform: scale(0.97);
+  cursor: grabbing;
+}
+.habit-card.drop-above {
+  border-top: 2px solid var(--a);
+  padding-top: calc(var(--s5) - 2px);
+}
+.habit-card.drop-below {
+  border-bottom: 2px solid var(--a);
+  padding-bottom: calc(var(--s5) - 2px);
+}
+
+/* ── STAT BAR ────────────────────────────────────────────────────── */
+.habits-stat-bar {
+  /* [FIX] Grid en lugar de flex para distribución uniforme de columnas.
+     auto-fit garantiza que siempre se vean bien sin wraps irregulares. */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  margin-bottom: var(--s8);
+  background: var(--bg-1);
+  border: 1px solid var(--b-1);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+}
+.hstat {
+  display: flex; flex-direction: column; gap: 3px;
+  /* [FIX] Separadores por borde en lugar de gap/flex */
+  padding: var(--s4) var(--s5);
+  border-right: 1px solid var(--b-1);
+}
+/* [FIX-P04] El último item de cada fila no lleva borde derecho.
+   Con auto-fit esto elimina el borde del último item de la última fila
+   independientemente de cuántas columnas haya. */
+.hstat:last-child { border-right: none; }
+
+/* Tablet: máximo 2 columnas */
+@media (max-width: 900px) and (min-width: 641px) {
+  .habits-stat-bar { grid-template-columns: repeat(2, 1fr); }
+  .hstat:nth-child(even) { border-right: none; }
+  .hstat { border-bottom: 1px solid var(--b-1); }
+  .hstat:nth-last-child(-n+2) { border-bottom: none; }
+}
+.hstat__val {
+  font-family: var(--f-display);
+  font-size: var(--tx-2xl);
+  font-weight: var(--fw-black);
+  color: var(--a);
+  line-height: 1;
+  letter-spacing: var(--ls-tight);
+}
+.hstat__label {
+  font-size: var(--tx-xs);
+  color: var(--tx-3);
+  font-family: var(--f-mono);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-caps);
+}
+
+/* ── HEADER DE SECCIÓN ───────────────────────────────────────────── */
+.habits-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--s3);
+  margin-bottom: var(--s5);
+}
+.habits-sort-bar {
+  display: flex; align-items: center; gap: var(--s3);
+}
+.habits-sort-select {
+  font-size: var(--tx-xs); font-family: var(--f-mono);
+  color: var(--tx-2); background: var(--bg-1);
+  border: 1px solid var(--b-1); border-radius: var(--r-md);
+  padding: 4px 8px; outline: none;
+  cursor: pointer;
+  transition: border-color var(--d-fast), color var(--d-fast);
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2 3.5l3 3 3-3' stroke='%23888780' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 24px;
+}
+.habits-sort-select:hover  { border-color: var(--b-2); color: var(--tx-1); }
+.habits-sort-select:focus  { border-color: var(--a-brd); box-shadow: 0 0 0 3px var(--a-sub); }
+
+/* ── EMPTY STATE ─────────────────────────────────────────────────── */
+.habits-empty {
+  grid-column: 1 / -1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: var(--s12) var(--s4);
+  text-align: center;
+  color: var(--tx-3);
+}
+.habits-empty__icon { margin-bottom: var(--s4); opacity: .4; }
+.habits-empty__title {
+  font-size: var(--tx-base); font-weight: var(--fw-semi);
+  color: var(--tx-2); margin-bottom: var(--s2);
+}
+.habits-empty__desc { font-size: var(--tx-sm); color: var(--tx-3); }
+
+/* ── DONUT RING (usado desde DonutRingComponent) ─────────────────── */
+.hc-ring { display: none; }
+
+/* ── ANIMACIÓN DE ENTRADA ────────────────────────────────────────── */
+@keyframes cardReveal {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+/* [FIX] animation: cardReveal movida al bloque principal de .habit-card */
+/* Escalonar las primeras 6 tarjetas */
+.habit-card:nth-child(1) { animation-delay: 0ms; }
+.habit-card:nth-child(2) { animation-delay: 40ms; }
+.habit-card:nth-child(3) { animation-delay: 80ms; }
+.habit-card:nth-child(4) { animation-delay: 120ms; }
+.habit-card:nth-child(5) { animation-delay: 160ms; }
+.habit-card:nth-child(6) { animation-delay: 200ms; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .habits-grid,
+  .habits-grid--full {
+    grid-template-columns: 1fr;
+    gap: var(--s3);
+  }
+  .habit-card { padding: var(--s4); }
+  /* [FIX-P04] nth-child es imprevisible con auto-fit (número de columnas variable).
+     En móvil se fuerza a 2 columnas fijas y se gestiona el borde con :nth-child
+     solo cuando se sabe que hay exactamente 2 columnas. */
+  .habits-stat-bar { grid-template-columns: repeat(2, 1fr); }
+  .hstat { padding: var(--s3) var(--s4); }
+  .hstat:nth-child(odd)  { border-right: 1px solid var(--b-1); }
+  .hstat:nth-child(even) { border-right: none; }
+  /* Eliminar border-bottom de la última fila */
+  .hstat:nth-last-child(-n+2) { border-bottom: none; }
+  .habits-page-header { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 480px) {
+  .hc-name { font-size: var(--tx-xs); }
+  .hc-icon { width: 34px; height: 34px; }
+  .hc-check {
+    width: 28px; height: 28px;
+    /* [FIX] Área táctil mínima de 44x44px (WCAG 2.5.5)
+       sin alterar el layout visual. */
+    position: relative;
+  }
+  .hc-check::before {
+    content: '';
+    position: absolute;
+    inset: -8px; /* 28 + 16 = 44px área táctil */
+  }
+}
+
+/* ── MEJORA: tarjeta sin color de categoría definido ─────────────── */
+/* Garantizar que --card-cat-color siempre tenga un fallback visible */
+.habit-card {
+  --card-cat-color: var(--a);
+}
