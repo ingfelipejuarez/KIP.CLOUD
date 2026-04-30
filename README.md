@@ -3,7 +3,7 @@
 Monolito: Express sirve el frontend + la API en el mismo servidor.
 
 ```
-tu-dominio.com
+Kipcloud.com
    │
 Railway (Node.js 20)
    ├── /app/*      → frontend HTML/CSS/JS (public/)
